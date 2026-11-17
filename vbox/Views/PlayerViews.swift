@@ -1186,7 +1186,6 @@ struct VideoDetailView: View {
         .edgeSwipeBack { dismiss() }
         .navigationBarHidden(isFromSourceDiscovery)
         .navigationBarBackButtonHidden(isFromSourceDiscovery)
-        .toolbar(isFromSourceDiscovery ? .hidden : .visible, for: .navigationBar)
     }
 
     // MARK: - 背景层

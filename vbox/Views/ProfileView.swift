@@ -65,6 +65,7 @@ struct ProfileView: View {
     @State private var showLoginSheet: Bool = false
     @State private var showEditNickname: Bool = false
     @State private var showPhotoPicker: Bool = false
+    @State private var showShareSheet: Bool = false
     @State private var historyRecords: [HistoryRecord] = []
     @State private var showWatchHistory: Bool = false
     @State private var showFavorites: Bool = false
@@ -212,6 +213,9 @@ struct ProfileView: View {
         }
         .sheet(isPresented: $showPushPlay) {
             PushPlayView()
+        }
+        .sheet(isPresented: $showShareSheet) {
+            ShareSheet(activityItems: [updateManager.shareURL])
         }
         .fullScreenCover(item: $selectedVideoItem) { video in
             VideoDetailView(video: video)
@@ -433,7 +437,9 @@ struct ProfileView: View {
 
             HStack(spacing: 12) {
                 // 分享vbox
-                ShareLink(item: updateManager.shareURL) {
+                Button {
+                    showShareSheet = true
+                } label: {
                     VStack(spacing: 8) {
                         Image(systemName: "square.and.arrow.up")
                             .font(.system(size: 24))
@@ -1639,22 +1645,21 @@ struct DownloadView: View {
                 }
                 .buttonStyle(.plain)
             }
-            if !downloadRecords.isEmpty {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Menu {
-                        Button("清空已完成", role: .destructive) {
-                            DownloadManager.shared.clearCompleted()
-                            reloadDownloads()
-                        }
-                        Button("清空全部", role: .destructive) {
-                            DatabaseManager.shared.clearDownloads()
-                            reloadDownloads()
-                        }
-                    } label: {
-                        Image(systemName: "ellipsis.circle")
-                            .foregroundColor(textColor)
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Menu {
+                    Button("清空已完成", role: .destructive) {
+                        DownloadManager.shared.clearCompleted()
+                        reloadDownloads()
                     }
+                    Button("清空全部", role: .destructive) {
+                        DatabaseManager.shared.clearDownloads()
+                        reloadDownloads()
+                    }
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                        .foregroundColor(textColor)
                 }
+                .disabled(downloadRecords.isEmpty)
             }
         }
         .onAppear {

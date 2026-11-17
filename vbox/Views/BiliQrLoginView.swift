@@ -52,13 +52,12 @@ struct BiliQrLoginView: View {
                     Button("关闭") { dismiss() }
                         .foregroundColor(.pink)
                 }
-                if auth.checkLoginStatus() {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button("退出登录") {
-                            Task { await auth.clearCookie() }
-                        }
-                        .foregroundColor(.red)
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("退出登录") {
+                        Task { await auth.clearCookie() }
                     }
+                    .foregroundColor(.red)
+                    .disabled(!auth.checkLoginStatus())
                 }
             }
             .onDisappear { auth.stopPolling() }

@@ -589,7 +589,6 @@ struct VideoPlayerViewV2: View {
                 playerState: playerState,
                 video: video
             )
-            .persistentSystemOverlays(.hidden)
 
             // 下载胶囊通知 — 顶部显示，不影响播放器交互
             VStack {
@@ -8024,12 +8023,18 @@ struct PlayerProgressBar: View {
                         }
                 )
                 // 修复: 补充 onTapGesture 处理点击进度条跳转（原 minimumDistance:0 靠拖拽模拟点击）
-                .onTapGesture { location in
-                    guard playerState.duration > 0 else { return }
-                    let x = max(0, min(location.x, geometry.size.width))
-                    let target = Double(x / geometry.size.width) * playerState.duration
-                    playerState.seek(to: target)
-                }
+                // iOS 15 无 onTapGesture(count:coordinateSpace:)（iOS17 才有），
+                // 改用 iOS 15 支持的 DragGesture(minimumDistance: 0) 取点击坐标。
+                // 进度条是独立触摸区域（不与 Button 嵌套），不会抢占外层 tap 事件。
+                .simultaneousGesture(
+                    DragGesture(minimumDistance: 0)
+                        .onEnded { value in
+                            guard playerState.duration > 0 else { return }
+                            let x = max(0, min(value.location.x, geometry.size.width))
+                            let target = Double(x / geometry.size.width) * playerState.duration
+                            playerState.seek(to: target)
+                        }
+                )
             }
             .frame(height: isPortrait ? 16 : 20)
 

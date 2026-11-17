@@ -173,7 +173,7 @@ struct AddChannelSheet: View {
                             onAdd()
                         }
                     }
-                    .fontWeight(.semibold)
+                    .font(.system(size: 17, weight: .semibold))
                     .disabled(newChannelId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }
             }

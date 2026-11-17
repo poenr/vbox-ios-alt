@@ -36,17 +36,14 @@ struct PushPlayView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    if isEditMode {
-                        Button("全选") {
+                    Button(isEditMode ? "全选" : "关闭") {
+                        if isEditMode {
                             toggleSelectAll()
-                        }
-                        .foregroundColor(accentColor)
-                    } else {
-                        Button("关闭") {
+                        } else {
                             dismiss()
                         }
-                        .foregroundColor(accentColor)
                     }
+                    .foregroundColor(accentColor)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack(spacing: 12) {

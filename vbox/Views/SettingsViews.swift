@@ -5186,7 +5186,7 @@ struct UCTVAuthQRView: View {
                 VStack(spacing: 20) {
                     Text("UC TV 画质授权")
                         .font(.title2)
-                        .fontWeight(.bold)
+                        .font(.system(size: 17, weight: .bold))
                         .padding(.top, 20)
 
                     if let qrImage = qrImage {

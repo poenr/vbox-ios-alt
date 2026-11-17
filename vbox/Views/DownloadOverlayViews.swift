@@ -966,7 +966,6 @@ struct LocalVideoPlayerView: View {
             }
         }
         .statusBarHidden(true)
-        .persistentSystemOverlays(.hidden)
     }
 }
 

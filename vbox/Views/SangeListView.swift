@@ -200,7 +200,7 @@ struct SangeListView: View {
                                 .font(.system(size: 12))
                                 .foregroundColor(.secondary)
                                 .frame(maxWidth: .infinity, minHeight: 40)
-                        }
+                            }
                     }
                     .padding(12)
                 }

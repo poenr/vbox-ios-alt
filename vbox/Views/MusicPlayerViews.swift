@@ -652,9 +652,9 @@ extension MusicPlayerFullView {
                 LazyVStack(spacing: 6) {
                     ForEach(Array(lyricLines.enumerated()), id: \.offset) { i, pair in
                         Text(pair.1)
-                            .font(.system(size: height > 250 ? 17 : 14))
+                            .font(.system(size: height > 250 ? 17 : 14,
+                                          weight: i == activeLyricIndex ? .bold : .regular))
                             .foregroundColor(i == activeLyricIndex ? accentColor : .white.opacity(0.55))
-                            .fontWeight(i == activeLyricIndex ? .bold : .regular)
                             .multilineTextAlignment(.center)
                             .frame(maxWidth: .infinity)
                             .id(idPrefix + "_\(i)")

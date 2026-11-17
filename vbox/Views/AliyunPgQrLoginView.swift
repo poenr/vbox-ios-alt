@@ -25,7 +25,7 @@ struct AliyunPgQrLoginView: View {
                 Image(systemName: "sparkles")
                     .foregroundColor(.purple)
                 Text("PG 扫码登录")
-                    .fontWeight(.medium)
+                    .font(.system(size: 17, weight: .medium))
                 Spacer()
                 if authManager.hasPgCredential {
                     Image(systemName: "checkmark.circle.fill")
