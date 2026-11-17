@@ -56,7 +56,6 @@ struct DailyBattleMainView: View {
         }
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(.hidden, for: .navigationBar)
         .background(Color.clear)
     }
 }
@@ -398,7 +397,6 @@ struct DailyBattlePlayerView: View {
         }
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(.hidden, for: .navigationBar)
         .onAppear { loadDetail() }
         .fullScreenCover(isPresented: $showPlayer) {
             if let vod = vodItem { VideoPlayerViewV2(video: vod) }
@@ -500,7 +498,8 @@ struct DailyBattlePlayerView: View {
                 .font(.system(size: 13, weight: .medium))
                 .foregroundColor(.secondary)
                 .padding(.leading, 16)
-            FlowLayout(spacing: 6) {
+            FlowLayout(spacing: 6, content: AnyView(
+
                 ForEach(keywordItems, id: \.self) { kw in
                     NavigationLink(
                         destination: DailyBattleSearchTab(platform: platform, presetKeyword: kw, svc: svc)
@@ -513,7 +512,8 @@ struct DailyBattlePlayerView: View {
                             .cornerRadius(10)
                     }
                 }
-            }
+            
+            ))
             .padding(.horizontal, 16)
         }
     }

@@ -18,6 +18,9 @@ class MPVKitMetalLayer: CAMetalLayer {
         }
     }
 
+    // wantsExtendedDynamicRangeContent 是 iOS 16.0+ 才有的属性，
+    // 降到 iOS 15 后需要用 @available 保护整个 override。
+    @available(iOS 16.0, *)
     override var wantsExtendedDynamicRangeContent: Bool {
         get { super.wantsExtendedDynamicRangeContent }
         set {

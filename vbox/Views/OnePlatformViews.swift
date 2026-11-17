@@ -838,7 +838,8 @@ struct OneSettingsView: View {
             }
 
             Section {
-                TextField("JWT Token（可选，手动覆盖）", text: $tokenInput, axis: .vertical)
+                TextField("JWT Token（可选，手动覆盖）", text: $tokenInput)
+                    .lineLimit(6)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                 TextField("user-key（可选，手动覆盖）", text: $userKeyInput)

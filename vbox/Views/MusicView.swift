@@ -115,7 +115,6 @@ struct MusicView: View {
                     }
                 }
             }
-            .toolbarBackground(.visible, for: .navigationBar)
         }
         .navigationViewStyle(.stack)
         // 底部悬浮播放条，便于跨页连续控制
@@ -429,7 +428,6 @@ struct MusicView: View {
                                     .foregroundColor(.secondary)
                                 Spacer()
                             }
-                            .gridCellColumns(2)
                             .padding(.vertical, 8)
                         }
                     }

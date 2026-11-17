@@ -361,8 +361,6 @@ struct FuliVideoBridgeView<Service: FuliPlatformService>: View {
                     showDownloadSheet = false
                 }
             )
-            .presentationDetents([.medium, .large])
-            .presentationDragIndicator(.visible)
         }
     }
 

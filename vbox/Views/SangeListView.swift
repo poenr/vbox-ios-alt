@@ -195,13 +195,11 @@ struct SangeListView: View {
                                     .foregroundColor(.secondary)
                             }
                             .frame(maxWidth: .infinity, minHeight: 60)
-                            .gridCellColumns(2)
                         } else if !viewModel.hasMore && !viewModel.items.isEmpty {
                             Text("— 已经到底啦 —")
                                 .font(.system(size: 12))
                                 .foregroundColor(.secondary)
                                 .frame(maxWidth: .infinity, minHeight: 40)
-                                .gridCellColumns(2)
                         }
                     }
                     .padding(12)
@@ -214,7 +212,6 @@ struct SangeListView: View {
         .background(Color.clear)
         .navigationTitle(subCategory.name)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(.hidden, for: .navigationBar)
         .onAppear { viewModel.loadInitial() }
     }
 

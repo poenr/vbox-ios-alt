@@ -166,7 +166,6 @@ struct SangeCategoryView: View {
         .background(Color.clear)
         .navigationTitle("三更")
         .navigationBarTitleDisplayMode(.large)
-        .toolbarBackground(.hidden, for: .navigationBar)
         .onAppear { viewModel.load() }
     }
 

@@ -11,7 +11,7 @@ struct ShortDramaView: View {
     @State private var showSourcePicker = false
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             VStack(spacing: 0) {
                 // 搜索栏
                 HStack(spacing: 8) {
@@ -238,7 +238,7 @@ struct ShortDramaView: View {
     // MARK: - 源选择弹窗
     
     private var sourcePickerSheet: some View {
-        NavigationStack {
+        NavigationView {
             List {
                 Button(action: {
                     dramaService.selectedSourceId = nil
@@ -287,7 +287,6 @@ struct ShortDramaView: View {
                 }
             }
         }
-        .presentationDetents([.medium, .large])
     }
     
     // MARK: - 搜索

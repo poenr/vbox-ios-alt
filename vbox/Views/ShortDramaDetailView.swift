@@ -14,7 +14,7 @@ struct ShortDramaDetailView: View {
     @State private var downloadTipText = ""
 
     var body: some View {
-        NavigationStack {
+        NavigationView {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
                     coverInfoSection
@@ -55,8 +55,6 @@ struct ShortDramaDetailView: View {
                         showDownloadSheet = false
                     }
                 )
-                .presentationDetents([.medium, .large])
-                .presentationDragIndicator(.visible)
             }
             .onAppear {
                 loadDetail()

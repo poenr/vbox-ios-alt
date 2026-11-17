@@ -1155,8 +1155,6 @@ struct VideoDetailView: View {
                     showEpisodeSheet = false
                 }
             )
-            .presentationDetents([.medium, .large])
-            .presentationDragIndicator(.visible)
         }
         .onAppear {
             initializeSources()
@@ -1189,7 +1187,6 @@ struct VideoDetailView: View {
         .navigationBarHidden(isFromSourceDiscovery)
         .navigationBarBackButtonHidden(isFromSourceDiscovery)
         .toolbar(isFromSourceDiscovery ? .hidden : .visible, for: .navigationBar)
-        .toolbarBackground(isFromSourceDiscovery ? .hidden : .visible, for: .navigationBar)
     }
 
     // MARK: - 背景层

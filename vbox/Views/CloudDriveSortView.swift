@@ -51,7 +51,6 @@ struct CloudDriveSortPopup: View {
                 }
                 .environment(\.editMode, .constant(.active))
                 .listStyle(.plain)
-                .scrollContentBackground(.hidden)
                 .frame(height: min(CGFloat(sortManager.sortableOrder.count) * 44, 340))
 
                 HStack {

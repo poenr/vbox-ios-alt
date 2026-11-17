@@ -24,6 +24,28 @@ extension Notification.Name {
 }
 
 // 屏幕方向辅助类
+
+/// iOS 15 兼容的方向更新封装。
+/// iOS 16.0+ 用 requestGeometryUpdate(.iOS(...)) 新签名，
+/// iOS 15 没有该 API，改用 KVC 设置设备方向（巨魔安装无审核限制）。
+extension UIWindowScene {
+    func vboxRequestGeometryUpdate(_ mask: UIInterfaceOrientationMask) {
+        if #available(iOS 16.0, *) {
+            requestGeometryUpdate(.iOS(interfaceOrientations: mask))
+        } else {
+            let orientation: UIInterfaceOrientation
+            if mask.contains(.landscapeRight) {
+                orientation = .landscapeRight
+            } else if mask.contains(.landscapeLeft) {
+                orientation = .landscapeLeft
+            } else {
+                orientation = .portrait
+            }
+            UIDevice.current.setValue(orientation.rawValue, forKey: "orientation")
+        }
+    }
+}
+
 class OrientationHelper {
     static var currentOrientationMask: UIInterfaceOrientationMask = .all
     private static var lastGeometryUpdateAt: Date = .distantPast
@@ -104,7 +126,7 @@ class OrientationHelper {
             if let targetOrientation {
                 UIDevice.current.setValue(targetOrientation.rawValue, forKey: "orientation")
             }
-            windowScene.requestGeometryUpdate(.iOS(interfaceOrientations: orientation))
+            windowScene.vboxRequestGeometryUpdate(orientation)
             if targetOrientation != nil {
                 UINavigationController.attemptRotationToDeviceOrientation()
             }
