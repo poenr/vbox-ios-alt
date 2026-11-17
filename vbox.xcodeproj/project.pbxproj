@@ -124,6 +124,7 @@
 		A10020 /* js in Resources */ = {isa = PBXBuildFile; fileRef = B10030 /* js */; };
 		A10022 /* PlayerSubViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10022 /* PlayerSubViews.swift */; };
 		A10023 /* PlayerViewsV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10023 /* PlayerViewsV2.swift */; };
+		A90024 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90024 /* ShareSheet.swift */; };
 		A90023 /* ImagePickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90023 /* ImagePickerSheet.swift */; };
 		A10024 /* LogVarDanmakuService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10024 /* LogVarDanmakuService.swift */; };
 		A10025 /* PlayerViewsV2_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10025 /* PlayerViewsV2_Extensions.swift */; };
@@ -299,7 +300,6 @@
 		SU0100000000000000000A001 /* SubtitleParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = SU0100000000000000000B001 /* SubtitleParser.swift */; };
 		TG0100000000000000000A001 /* TGSearchConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = TG0100000000000000000B001 /* TGSearchConfigStore.swift */; };
 		TG0100000000000000000A002 /* TGChannelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = TG0100000000000000000B002 /* TGChannelListView.swift */; };
-		AA00000000000000000000A2 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000000000000000000A1 /* ShareSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -462,6 +462,7 @@
 		B10021 /* UpdateSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSheet.swift; sourceTree = "<group>"; };
 		B10022 /* PlayerSubViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerSubViews.swift; sourceTree = "<group>"; };
 		B10023 /* PlayerViewsV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewsV2.swift; sourceTree = "<group>"; };
+		B90024 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		B90023 /* ImagePickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerSheet.swift; sourceTree = "<group>"; };
 		B10024 /* LogVarDanmakuService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogVarDanmakuService.swift; sourceTree = "<group>"; };
 		B10025 /* PlayerViewsV2_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewsV2_Extensions.swift; sourceTree = "<group>"; };
@@ -613,7 +614,6 @@
 		SU0100000000000000000B001 /* SubtitleParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleParser.swift; sourceTree = "<group>"; };
 		TG0100000000000000000B001 /* TGSearchConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TGSearchConfigStore.swift; sourceTree = "<group>"; };
 		TG0100000000000000000B002 /* TGChannelListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TGChannelListView.swift; sourceTree = "<group>"; };
-		AA00000000000000000000A1 /* ShareSheet.swift in Sources */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -5061,6 +5061,7 @@
 				C1A000000000000000000002 /* CloudDriveSortView.swift */,
 				B10022 /* PlayerSubViews.swift */,
 				B10023 /* PlayerViewsV2.swift */,
+				B90024 /* ShareSheet.swift */,
 				B90023 /* ImagePickerSheet.swift */,
 				67242B53662EFB908D1D24B3 /* IJKPlayerRepresentable.swift */,
 				B10033 /* MDKPlayerRepresentable.swift */,
@@ -5361,6 +5362,7 @@
 				A10018 /* UpdateManager.swift in Sources */,
 				A10022 /* PlayerSubViews.swift in Sources */,
 				A10023 /* PlayerViewsV2.swift in Sources */,
+				A90024 /* ShareSheet.swift in Sources */,
 				A90023 /* ImagePickerSheet.swift in Sources */,
 				A10024 /* LogVarDanmakuService.swift in Sources */,
 				A10025 /* PlayerViewsV2_Extensions.swift in Sources */,
@@ -5476,7 +5478,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-			AA00000000000000000000A2 /* ShareSheet.swift in Sources */,
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
