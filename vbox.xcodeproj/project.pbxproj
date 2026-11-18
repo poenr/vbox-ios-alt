@@ -124,8 +124,6 @@
 		A10020 /* js in Resources */ = {isa = PBXBuildFile; fileRef = B10030 /* js */; };
 		A10022 /* PlayerSubViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10022 /* PlayerSubViews.swift */; };
 		A10023 /* PlayerViewsV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10023 /* PlayerViewsV2.swift */; };
-		A90024 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90024 /* ShareSheet.swift */; };
-		A90023 /* ImagePickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90023 /* ImagePickerSheet.swift */; };
 		A10024 /* LogVarDanmakuService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10024 /* LogVarDanmakuService.swift */; };
 		A10025 /* PlayerViewsV2_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10025 /* PlayerViewsV2_Extensions.swift */; };
 		A10026 /* SubscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10015 /* SubscriptionManager.swift */; };
@@ -220,6 +218,8 @@
 		A477C1043BC04B0A93AFB2BF /* FourHVideoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAAAB2C8F43495F933A2C8A /* FourHVideoService.swift */; };
 		A4FFD70F90C99F216CDF42E6 /* nettle.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D32E575559754AD2F00E37C /* nettle.xcframework */; settings = {ATTRIBUTES = (Required, ); }; };
 		A7C9E002A7C9E002A7C9E002 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7C9E001A7C9E001A7C9E001 /* AVKit.framework */; };
+		A90023 /* ImagePickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90023 /* ImagePickerSheet.swift */; };
+		A90024 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90024 /* ShareSheet.swift */; };
 		A99235B75AB7AAAC2D091226 /* SourceDisplayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE18719058C97F4EF082F120 /* SourceDisplayItem.swift */; };
 		AABBCC001122334455667721 /* WelfareSpiderLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABBCC001122334455667711 /* WelfareSpiderLoader.swift */; };
 		AABBCC001122334455667722 /* WelfareSpiderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABBCC001122334455667712 /* WelfareSpiderService.swift */; };
@@ -462,8 +462,6 @@
 		B10021 /* UpdateSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSheet.swift; sourceTree = "<group>"; };
 		B10022 /* PlayerSubViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerSubViews.swift; sourceTree = "<group>"; };
 		B10023 /* PlayerViewsV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewsV2.swift; sourceTree = "<group>"; };
-		B90024 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
-		B90023 /* ImagePickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerSheet.swift; sourceTree = "<group>"; };
 		B10024 /* LogVarDanmakuService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogVarDanmakuService.swift; sourceTree = "<group>"; };
 		B10025 /* PlayerViewsV2_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewsV2_Extensions.swift; sourceTree = "<group>"; };
 		B10026 /* DoubanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubanService.swift; sourceTree = "<group>"; };
@@ -559,6 +557,8 @@
 		B5E839D3291D49209FCC2D19 /* FuliVideoBridgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuliVideoBridgeView.swift; sourceTree = "<group>"; };
 		B73C6245614D743A2D10D55A /* AliyunMediaDownloader.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AliyunMediaDownloader.framework; path = vbox/Libraries/AliyunMediaDownloader.framework; sourceTree = SOURCE_ROOT; };
 		B7BD5941C23943FA946FBF55 /* FuliPlatformMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuliPlatformMainView.swift; sourceTree = "<group>"; };
+		B90023 /* ImagePickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerSheet.swift; sourceTree = "<group>"; };
+		B90024 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		BD46FA65838EB8EB5F268E21 /* Libswresample.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = Libswresample.xcframework; path = vbox/Libraries/MPV/MPVKitDependencies/Libswresample.xcframework; sourceTree = SOURCE_ROOT; };
 		BFE207598530999CD737A4C6 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		C0E84749E9834DDCBAF5CBB3 /* FuliPlatformService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuliPlatformService.swift; sourceTree = "<group>"; };
