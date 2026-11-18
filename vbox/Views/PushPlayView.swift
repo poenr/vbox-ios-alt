@@ -87,6 +87,48 @@ struct PushPlayView: View {
         }
     }
     
+    /// 推送播放页导航栏右侧操作（提取为独立 ViewBuilder 以规避 iOS 15 的泛型推断歧义）
+    @ViewBuilder
+    private var pushPlayTrailingActions: some View {
+        HStack(spacing: 12) {
+            if !store.items.isEmpty {
+                if isEditMode {
+                    Button("完成") {
+                        isEditMode = false
+                        selectedItems.removeAll()
+                    }
+                    .foregroundColor(accentColor)
+                } else {
+                    Menu {
+                        Button(action: {
+                            isEditMode = true
+                        }) {
+                            Label("批量删除", systemImage: "checkmark.circle")
+                        }
+                        Button(role: .destructive, action: {
+                            showClearConfirm = true
+                        }) {
+                            Label("清空全部", systemImage: "trash")
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis.circle")
+                            .font(.system(size: 18))
+                            .foregroundColor(accentColor)
+                    }
+                }
+            }
+            if !isEditMode {
+                Button(action: {
+                    showAddSheet = true
+                }) {
+                    Image(systemName: "plus.circle.fill")
+                        .font(.system(size: 20))
+                        .foregroundColor(accentColor)
+                }
+            }
+        }
+    }
+
     // MARK: - 空状态
     
     private var emptyStateView: some View {
