@@ -50,23 +50,12 @@ struct PushPlayView: View {
                 }
                 
                 // 编辑模式底部工具栏
-                if isEditMode {
-                    ToolbarItem(placement: .bottomBar) {
-                        HStack {
-                            Button(role: .destructive, action: {
-                                deleteSelected()
-                            }) {
-                                HStack(spacing: 4) {
-                                    Image(systemName: "trash")
-                                    Text("删除选中 (\(selectedItems.count))")
-                                }
-                                .foregroundColor(selectedItems.isEmpty ? .gray : .red)
-                            }
-                            .disabled(selectedItems.isEmpty)
-                            
-                            Spacer()
-                        }
-                    }
+                // 条件 ToolbarItem 在 iOS 15 会引发 ambiguous use of 'toolbar(content:)'，
+                // 改为无条件 + .disabled()，内容提取为独立 ViewBuilder。
+                ToolbarItem(placement: .bottomBar) {
+                    pushPlayBottomBar
+                        .opacity(isEditMode ? 1 : 0)
+                        .disabled(!isEditMode || selectedItems.isEmpty)
                 }
             }
             .sheet(isPresented: $showAddSheet) {
@@ -126,6 +115,24 @@ struct PushPlayView: View {
                         .foregroundColor(accentColor)
                 }
             }
+        }
+    }
+
+    /// 推送播放页底部编辑栏（提取为独立 ViewBuilder 以规避 iOS 15 的泛型推断歧义）
+    @ViewBuilder
+    private var pushPlayBottomBar: some View {
+        HStack {
+            Button(role: .destructive, action: {
+                deleteSelected()
+            }) {
+                HStack(spacing: 4) {
+                    Image(systemName: "trash")
+                    Text("删除选中 (\(selectedItems.count))")
+                }
+                .foregroundColor(selectedItems.isEmpty ? .gray : .red)
+            }
+            .disabled(selectedItems.isEmpty)
+            Spacer()
         }
     }
 
