@@ -196,7 +196,6 @@ struct VboxSplashView: View {
                     Text("vbox聚合观影软件由Ai开发而来")
                 }
                 .font(.system(size: 12, weight: .regular))
-                .kerning(2)
                 .foregroundColor(subtitleColor)
                 .multilineTextAlignment(.center)
 
@@ -205,7 +204,6 @@ struct VboxSplashView: View {
                 if !Self.appVersion.isEmpty {
                     Text(Self.appVersion)
                         .font(.system(size: 11, weight: .regular))
-                        .kerning(1)
                         .foregroundColor(subtitleColor.opacity(0.75))
                         .padding(.top, 14)
                 }

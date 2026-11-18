@@ -46,44 +46,7 @@ struct PushPlayView: View {
                     .foregroundColor(accentColor)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    HStack(spacing: 12) {
-                        if !store.items.isEmpty {
-                            if isEditMode {
-                                Button("完成") {
-                                    isEditMode = false
-                                    selectedItems.removeAll()
-                                }
-                                .foregroundColor(accentColor)
-                            } else {
-                                Menu {
-                                    Button(action: {
-                                        isEditMode = true
-                                    }) {
-                                        Label("批量删除", systemImage: "checkmark.circle")
-                                    }
-                                    Button(role: .destructive, action: {
-                                        showClearConfirm = true
-                                    }) {
-                                        Label("清空全部", systemImage: "trash")
-                                    }
-                                } label: {
-                                    Image(systemName: "ellipsis.circle")
-                                        .font(.system(size: 18))
-                                        .foregroundColor(accentColor)
-                                }
-                            }
-                        }
-                        
-                        if !isEditMode {
-                            Button(action: {
-                                showAddSheet = true
-                            }) {
-                                Image(systemName: "plus.circle.fill")
-                                    .font(.system(size: 20))
-                                    .foregroundColor(accentColor)
-                            }
-                        }
-                    }
+                    pushPlayTrailingActions
                 }
                 
                 // 编辑模式底部工具栏

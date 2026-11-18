@@ -215,7 +215,7 @@ struct ProfileView: View {
             PushPlayView()
         }
         .sheet(isPresented: $showShareSheet) {
-            ShareSheet(activityItems: [updateManager.shareURL])
+            ShareSheet(items: [updateManager.shareURL])
         }
         .fullScreenCover(item: $selectedVideoItem) { video in
             VideoDetailView(video: video)
