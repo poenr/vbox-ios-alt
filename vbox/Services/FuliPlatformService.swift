@@ -120,27 +120,52 @@ extension FuliPlatformService {
     func probeHost() async -> String {
         let proxyEnabled = WelfareProxyStore.shared.isProxyEnabled(for: platformName)
         let hosts = allHosts
-        for host in hosts {
-            let urlString = proxyEnabled ? WelfareProxyStore.shared.buildProxiedURL(host) : host
-            guard let url = URL(string: urlString) else { continue }
-            var req = URLRequest(url: url)
-            defaultHeaders(host: host).forEach { req.setValue($1, forHTTPHeaderField: $0) }
-            do {
-                let (_, resp) = try await session.data(for: req)
-                guard let http = resp as? HTTPURLResponse,
-                      (200...299).contains(http.statusCode) else { continue }
-                if let obj = self as? FuliBaseService {
-                    await MainActor.run {
-                        obj.currentHost = host
-                        obj.isHostReady = true
+        // ✅ 并行探测：原实现是「串行逐个探测 + 单 host 15s 超时」，
+        // 当平台前几个 host 全部不可达时（真机实测 173 个 host 里 126 个不可达、
+        // 117 个福利平台中 74 个全军覆没），需等 N×15 秒才轮到一个可用的，
+        // 表现为播放界面一直卡在「正在解析播放地址」。
+        // 改为并行后最坏耗时 = 单个 host 的超时，与 host 数量无关。
+        // 语义保持不变：仍取「原始顺序里最靠前」的可用 host。
+        let hits: [(index: Int, host: String)] = await withTaskGroup(of: (Int, String)?.self) { group in
+            for (index, host) in hosts.enumerated() {
+                group.addTask { [weak self] in
+                    guard let self = self else { return nil }
+                    let urlString = proxyEnabled ? WelfareProxyStore.shared.buildProxiedURL(host) : host
+                    guard let url = URL(string: urlString) else { return nil }
+                    var req = URLRequest(url: url)
+                    // 单 host 超时收紧到 5s：并行下总耗时由最慢的那个决定
+                    req.timeoutInterval = 5
+                    self.defaultHeaders(host: host).forEach { req.setValue($1, forHTTPHeaderField: $0) }
+                    do {
+                        let (_, resp) = try await self.session.data(for: req)
+                        guard let http = resp as? HTTPURLResponse,
+                              (200...299).contains(http.statusCode) else { return nil }
+                        return (index, host)
+                    } catch {
+                        print("[\(platformName)] 探测失败 \(host)\(proxyEnabled ? " (代理)" : ""): \(error.localizedDescription)")
+                        return nil
                     }
                 }
-                print("[\(platformName)] 选用站点: \(host)\(proxyEnabled ? " (代理)" : "")")
-                return host
-            } catch {
-                print("[\(platformName)] 探测失败 \(host)\(proxyEnabled ? " (代理)" : ""): \(error.localizedDescription)")
-                continue
             }
+            var results: [(Int, String)] = []
+            for await r in group {
+                if let r { results.append(r) }
+            }
+            return results
+        }
+        if hits.isEmpty {
+            print("[\(platformName)] 并行探测完成：\(hosts.count) 个 host 全部不可用")
+        }
+        if let best = hits.min(by: { $0.index < $1.index }) {
+            let host = best.host
+            if let obj = self as? FuliBaseService {
+                await MainActor.run {
+                    obj.currentHost = host
+                    obj.isHostReady = true
+                }
+            }
+            print("[\(platformName)] 选用站点: \(host)\(proxyEnabled ? " (代理)" : "")（并行探测命中 \(hits.count)/\(hosts.count)）")
+            return host
         }
         let fallback = hosts.first ?? defaultHosts.first ?? ""
         if let obj = self as? FuliBaseService {
