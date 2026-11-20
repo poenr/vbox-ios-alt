@@ -80,7 +80,41 @@ final class RemoteSourceConfigManager: ObservableObject {
         ("gh-proxy",  "https://gh-proxy.com"),
     ]
 
+
+    /// 首次启动时部署 Bundle 内置的「精简可用源」配置。
+    ///
+    /// - Bundle 的 `js/slim_all_sources.json` 只含实测在 iOS 上能解析出真实
+    ///   m3u8/mp4 的源（JS + Python 蜘蛛），避开 298 个死源
+    ///   （drpy2/lf 脚本在 App bundle 里缺失、csp_* 无 JVM）。
+    /// - Documents 已有缓存时不覆盖（尊重用户后续手动调整）。
+    /// - 同时清空远程 manifest 地址：避免启动后被远程全量源覆盖回去。
+    private func vboxDeployBuiltinSlimSources() {
+        let fm = FileManager.default
+        guard let docs = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+        let cacheDir = docs.appendingPathComponent("remote_sources", isDirectory: true)
+        let target = cacheDir.appendingPathComponent("all_sources.json")
+
+        if !fm.fileExists(atPath: target.path),
+           let bundled = Bundle.main.url(forResource: "slim_all_sources", withExtension: "json",
+                                        subdirectory: "js"),
+           let data = try? Data(contentsOf: bundled) {
+            try? fm.createDirectory(at: cacheDir, withIntermediateDirectories: true)
+            try? data.write(to: target, options: .atomic)
+            print("[RemoteSource] 已部署内置精简源配置（\(data.count) 字节）")
+        }
+
+        // 内置精简源模式下不再联网刷新远程默认源
+        let manifestKey = RemoteSourceConfigKeys.defaultManifestURL
+        if UserDefaults.standard.string(forKey: manifestKey) == nil,
+           Bundle.main.url(forResource: "slim_all_sources", withExtension: "json",
+                           subdirectory: "js") != nil {
+            UserDefaults.standard.set("", forKey: manifestKey)
+            print("[RemoteSource] 已禁用远程默认源刷新（使用内置精简源）")
+        }
+    }
+
     private init() {
+        vboxDeployBuiltinSlimSources()
         remoteDefaultSourceEnabled = UserDefaults.standard.object(forKey: RemoteSourceConfigKeys.remoteDefaultSourceEnabled) as? Bool ?? true
         bundleSourcesEnabled = UserDefaults.standard.object(forKey: RemoteSourceConfigKeys.bundleSourcesEnabled) as? Bool ?? false
         defaultManifestURL = UserDefaults.standard.string(forKey: RemoteSourceConfigKeys.defaultManifestURL) ?? Self.defaultManifestURL
