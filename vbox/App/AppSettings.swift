@@ -174,7 +174,11 @@ class AppSettings: ObservableObject {
         let currentAppVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
         let lastAppVersion = UserDefaults.standard.string(forKey: Self.lastAppVersionKey) ?? ""
         if !currentAppVersion.isEmpty && currentAppVersion != lastAppVersion {
-            UserDefaults.standard.removeObject(forKey: Self.defaultManifestURLKey)
+            // vboxKeepBuiltinSlimManifestURL: 内置精简源模式下不清空远程地址，
+            // 否则 App 升级会把远程默认源恢复回来并覆盖精简配置。
+            if UserDefaults.standard.string(forKey: Self.defaultManifestURLKey) != "" {
+                UserDefaults.standard.removeObject(forKey: Self.defaultManifestURLKey)
+            }
             UserDefaults.standard.set(currentAppVersion, forKey: Self.lastAppVersionKey)
         }
 
