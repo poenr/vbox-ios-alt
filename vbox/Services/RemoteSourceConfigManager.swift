@@ -112,6 +112,43 @@ final class RemoteSourceConfigManager: ObservableObject {
             UserDefaults.standard.set("", forKey: manifestKey)
             print("[RemoteSource] 已禁用远程默认源刷新（使用内置精简源）")
         }
+
+        // ★ 预置 JS/Python 源脚本到 js_cache。
+        //   源脚本原本从远程下载（remoteSpiderBaseURL() 依赖 manifest URL），
+        //   manifest 置空后 base URL 为空 → 下载不到脚本 → 源加载不出来。
+        //   加载是 cache-first（读 js_cache/<key>.js），故直接把 Bundle 里的
+        //   脚本复制过去即可免下载。
+        vboxPresetSpiderScripts(in: cacheDir)
+    }
+
+    /// 把 Bundle 内 `js/preset_scripts/<key>.js` 复制到 `js_cache/<key>.js`。
+    private static func vboxPresetSpiderScripts(in cacheDir: URL) {
+        let fm = FileManager.default
+        let jsCache = cacheDir.appendingPathComponent("js_cache", isDirectory: true)
+        // 多路径兜底：Xcode 文件夹引用下资源可能在 "js/preset_scripts" 或 "preset_scripts"
+        var bundled: URL? = Bundle.main.url(forResource: "preset_scripts", withExtension: nil,
+                                            subdirectory: "js")
+        if bundled == nil {
+            bundled = Bundle.main.url(forResource: "preset_scripts", withExtension: nil,
+                                     subdirectory: "js/preset_scripts")
+        }
+        if bundled == nil {
+            bundled = Bundle.main.url(forResource: "js", withExtension: nil)
+                .map { $0.appendingPathComponent("preset_scripts", isDirectory: true) }
+        }
+        guard let dir = bundled,
+              let items = try? fm.contentsOfDirectory(at: dir,
+                                                      includingPropertiesForKeys: nil) else { return }
+        try? fm.createDirectory(at: jsCache, withIntermediateDirectories: true)
+        var copied = 0
+        for item in items where item.pathExtension == "js" {
+            let dst = jsCache.appendingPathComponent(item.lastPathComponent)
+            if fm.fileExists(atPath: dst.path) { continue }
+            if (try? fm.copyItem(at: item, to: dst)) != nil { copied += 1 }
+        }
+        if copied > 0 {
+            print("[RemoteSource] 已预置 \(copied) 个源脚本到 js_cache")
+        }
     }
 
     private init() {
