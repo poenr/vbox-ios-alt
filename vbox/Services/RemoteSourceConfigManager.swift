@@ -89,7 +89,7 @@ final class RemoteSourceConfigManager: ObservableObject {
     ///   （drpy2/lf 脚本在 App bundle 里缺失、csp_* 无 JVM）。
     /// - Documents 已有缓存时不覆盖（尊重用户后续手动调整）。
     /// - 同时清空远程 manifest 地址：避免启动后被远程全量源覆盖回去。
-    private static func vboxDeployBuiltinSlimSources() {
+    static func vboxDeployBuiltinSlimSources() {
         let fm = FileManager.default
         guard let docs = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
         let cacheDir = docs.appendingPathComponent("remote_sources", isDirectory: true)
@@ -143,7 +143,12 @@ final class RemoteSourceConfigManager: ObservableObject {
         var copied = 0
         for item in items where item.pathExtension == "js" {
             let dst = jsCache.appendingPathComponent(item.lastPathComponent)
-            if fm.fileExists(atPath: dst.path) { continue }
+            if fm.fileExists(atPath: dst.path) {
+                // 已存在但内容可能过期（源脚本修复后需生效）→ 覆盖写入
+                if (try? fm.removeItem(at: dst)) != nil,
+                   (try? fm.copyItem(at: item, to: dst)) != nil { copied += 1 }
+                continue
+            }
             if (try? fm.copyItem(at: item, to: dst)) != nil { copied += 1 }
         }
         if copied > 0 {
