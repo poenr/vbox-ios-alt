@@ -1230,6 +1230,10 @@ globalThis.__JS_SPIDER__ = _spider;
     /// 优先从本地缓存读取 JS 代码，缓存不存在时 fallback 到网络下载
     /// 使用 TaskGroup 并发加载多个引擎
     private func loadRemoteSpiderEngines(baseURL: String, sites: [SiteConfig]) async {
+        // ★ 内置精简源自动部署：RemoteSourceConfigManager 是懒加载单例，
+        //   仅靠其 init 不保证被触发；此处显式调用，确保首次启动即部署
+        //   all_sources.json + js_cache 预置脚本。
+        RemoteSourceConfigManager.vboxDeployBuiltinSlimSources()
         guard !sites.isEmpty else { return }
 
         // 收集需要加载的 JS 蜘蛛站点 + Python 蜘蛛站点 + Node 托管蜘蛛站点
